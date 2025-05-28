@@ -1,0 +1,5 @@
+# List of working directories
+# Copy this template file to ~/bin/wds.txt or $WDS_FILE
+# Format: <name> <directory>
+# Lines starting with '#' are not considered
+. $(pwd)

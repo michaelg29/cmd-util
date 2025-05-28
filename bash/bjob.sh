@@ -3,8 +3,9 @@
 # Execute and log background jobs
 
 id=$1
-now=`date "+%Y-%m-%d_%H-%M-%S"`
-out_file=out_${now}_${id}.txt
+now=`date "+%Y_%m_%d-%H_%M_%S"`
+host=${HOST:=${HOSTNAME}}
+out_file=${USER}-${host}-${now}-${id}.txt
 echo "Writing log to $out_file"
 shift
 BJOB_IN_FILE=${BJOB_IN_FILE:=./bjob.in}
