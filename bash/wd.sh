@@ -4,11 +4,16 @@
 
 exe="$1"
 dir="$2"
+wds_file=${WDS_FILE:="$3"}
+
 
 # only print directory to stdout if storing in a variable
 {
 
 [ -z "$exe" ] && exe="echo"
+[ -z "$wds_file" ] && wds_file="${HOME}/bin/wds.txt"
+
+echo "exe is $exe dir is $dir wds_file is $wds_file"
 
 COL_CYAN='\033[0;96m'
 COL_NORMAL='\033[0;39m'
@@ -16,7 +21,7 @@ COL_NORMAL='\033[0;39m'
 normal=$(tput sgr0; echo -e $COL_NORMAL)
 def=$(tput bold; echo -e $COL_CYAN)
 
-if [ -f ~/bin/wds.txt ]; then
+if [ -f "$wds_file" ]; then
 
   names=()
   opts=()
@@ -24,7 +29,7 @@ if [ -f ~/bin/wds.txt ]; then
   while read line; do
       names+=($(eval "echo \"${line%% *}\""))
       opts+=($(eval "echo \"${line##* }\""))
-  done < ~/bin/wds.txt
+  done < "$wds_file"
 
   # option display
   if [ -z "$dir" ]; then
@@ -58,4 +63,5 @@ fi
 } 1>&2
 
 # open
-${exe} ${dir}
+#${exe} ${dir}
+echo ${dir}

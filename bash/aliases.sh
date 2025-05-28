@@ -1,6 +1,9 @@
 #!/bin/bash
+# Copy these into your .bashrc file
 
-alias wd='${HOME}/bin/cmd-util/wd.sh'
-alias cwd='cd $(${HOME}/bin/cmd-util/wd.sh echo)'
-alias pushwd='pushd $(${HOME}/bin/cmd-util/wd.sh echo)'
-alias bjob='${HOME}/bin/cmd-util/bjob.sh'
+# cmd-util scripts
+CMD_UTIL_HOME="${HOME}/bin/cmd-util"
+alias wd='${CMD_UTIL_HOME}/bash/wd.sh'
+alias cwd='cd $(${CMD_UTIL_HOME}/bash/wd.sh echo)'
+alias pushwd='pushd $(${CMD_UTIL_HOME}/bash/wd.sh echo)'
+alias bjob='${CMD_UTIL_HOME}/bash/bjob.sh'
