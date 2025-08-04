@@ -41,15 +41,15 @@ if [ -f "$wds_file" ]; then
     done
     read -p "  Plase select your target destination ${def}[.]${normal}: " dir
 
-    dir=${dir:-.}
+    dir=(${dir:-.})
 
     # find selection
     i=0
     for name in "${names[@]}"; do
-      [[ "$name" == "$dir" ]] && break
+      [[ "$name" == "${dir[0]}" ]] && break
       ((i++))
     done
-    dir="${opts[$i]}"
+    dir="${opts[$i]}${dir[1]}"
   fi
 
 else
