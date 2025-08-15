@@ -17,6 +17,7 @@ else
   procid=$!
 fi
 disown
+echo "Writing output to $out_file"
 if [ ! -z "$BJOB_JOB_LOG" ]; then
   if [ ! -f "$BJOB_JOB_LOG" ]; then
     echo "Time,Job ID,Process ID,User,Working directory,Log file,Run command,Comments" > $BJOB_JOB_LOG

@@ -7,3 +7,5 @@ out_file=${USER}-${host}-${now}-${id}.txt
 
 tee $out_file
 
+echo "Written log to $out_file"
+
