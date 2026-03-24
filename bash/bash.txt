@@ -3,6 +3,8 @@
 cat /etc/*-release
 sudo useradd -m jane
 sudo passwd jane
+sudo usermod -aG sudo jane
+chsh jane -s /bin/bash
 
 # File writing and scanning
 sed -I -e 's/PATTERN/REPLACEMENT/g' filepath*.txt
