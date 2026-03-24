@@ -1,26 +1,51 @@
 
-#cat /etc/*-release
-#sudo useradd -m jane
-#sudo passwd jane
+# User management
+cat /etc/*-release
+sudo useradd -m jane
+sudo passwd jane
 
-#sed -I -e 's/PATTERN/REPLACEMENT/g' filepath*.txt
-#find ../src -type f -iregex [.]*\/[^.]*\.c
-#reset # if cannot see text
-#kill -CONT <PID>
-#tail -f /proc/<pid>/fd/1
-#for f in power-*.txt; do
-#        group="${f##power-}"
-#        group="${group%%.txt}"
+# File writing and scanning
+sed -I -e 's/PATTERN/REPLACEMENT/g' filepath*.txt
+find ../src -type f -iregex [.]*\/[^.]*\.c
+tar zcf out.tar.gz dir1 dir2 f1 f2 ... 
+tar zxf out.tar.gz
+curl -L <url> --output <file>
+wget <url> > <file>
+
+# Terminal management
+reset # if cannot see text
+
+# Process management
+ps -Flww -p <PID> # get process information
+kill -CONT <PID>
+tail -f /proc/<pid>/fd/1
+
+# File and directory names
+0="<SCRIPT_PATH>/script.sh"
+basename $0 # script.sh
+dirname $0 # <SCRIPT_PATH>
+
+# Text
+for f in power-*.txt; do
+        group="${f##power-}"
+        group="${group%%.txt}"
+
+pe_ys=("0" "1" "2" "3")
+for pe_y in "${pe_ys[@]}"; do
 
 # vim
 #"ayy - copy one line into register a (a-z)
 #"ay<n> - copy n lines into register a
 #"ap - paste register a
 
+# screen
+# Ctrl-A d to exit
+
 # tmux
 #tmux new -t <tid>
 #tmux ls
 #tmux attach-session -t <tid>
+#tmux kill-session -t <tid>
 # Ctrl-B % for a vertical split
 # Ctrl-B " for a horizontal split
 # Ctrl-B O to switch

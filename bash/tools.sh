@@ -24,9 +24,8 @@ alias debug='__debug_cmd__="echo IN DEBUG MODE"; while [ "$__debug_cmd__" != "ex
 
 # recursive remove
 function rmr {
-  pattern=$1
-  shift
-  find . -name "$pattern" |
+  pattern=$2
+  find $1 -name "$pattern" |
   while read file; do
     rm -f $* "$file"
   done

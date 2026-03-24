@@ -1,6 +1,9 @@
 #!/bin/bash
 # Copy these into your .bashrc file
 
+# general aliases
+alias pinfo='ps -Flww -p'
+
 # cmd-util scripts
 CMD_UTIL_HOME="${HOME}/bin/cmd-util"
 alias wd='${CMD_UTIL_HOME}/bash/wd.sh'
