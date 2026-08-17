@@ -59,11 +59,13 @@ export function rmr
 # Trim white spacing in markdown notes
 function trim_mds {
   dir=$1
+  indent=$2
+  indent="${indent:=4}"
   make -C ${CMD_UTIL_HOME}/src trim_md_list_spacing
   find $dir -name "*.md" |
   while read file; do
     echo "Trimming $file"
-    ${CMD_UTIL_HOME}/bin/trim_md_list_spacing $file
+    ${CMD_UTIL_HOME}/bin/trim_md_list_spacing $file $indent
   done
 }
 export function trim_mds
@@ -71,7 +73,7 @@ export function trim_mds
 # Perform grep in a set of files
 function findgrep {
     [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] && \
-        echo "Usage: GREP=<grep_cmd> findgrep <dir> <file_pattern> <grep_pattern>" && \
+        echo "Usage: GREP={grep_cmd} findgrep {dir} {file_pattern} {grep_pattern}" && \
         return 1
 
     GREP=${GREP:="grep"}

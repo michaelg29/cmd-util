@@ -3,10 +3,19 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-int main(int argc, char **argv) {    
+#define TAB_WIDTH 4
+
+int main(int argc, char **argv) {
     if (argc < 2) {
-        printf("Usage: trim_md_list_spacing <FILE>\n");
+        printf("Usage: trim_md_list_spacing <FILE> <TAB_WIDTH>\n");
         return 1;
+    }
+
+    // tab width
+    int tab_width = TAB_WIDTH;
+    if (argc > 2) {
+        tab_width = atoi(argv[2]);
+        if (!tab_width) tab_width = TAB_WIDTH;
     }
 
     // file names
@@ -41,10 +50,12 @@ int main(int argc, char **argv) {
                     line[read-1] = '\0';
                 }
             }
-            
+
             // find first character
             n = 0;
+            bool all_spaces = true;
             while (line[n] && line[n] <= ' ' && n < read) {
+                all_spaces = all_spaces && line[n] == ' ';
                 ++n;
             }
             if (n == read) {
@@ -53,12 +64,22 @@ int main(int argc, char **argv) {
                 continue;
             }
             //printf("New line '%s' starts with '%c' (%d)\n", line, line[n], n);
-            
+
             char c = line[n];
             bool is_list = false;
+            char *line_with_indents = line;
             if (c == '*' || c == '-') {
                 is_list = true;
                 line[n] = '-';
+                if (tab_width && all_spaces) {
+                    int num_indents = n / tab_width;
+                    int tab_start = n - num_indents;
+                    for (int i = tab_start; i < n; ++i) {
+                        line[i] = '\t';
+                    }
+                    line_with_indents = &line[tab_start];
+                    //printf("All spaces (%d) before list, converted to %d indentations (width %d) starting at character %d (%d vs %d)\n", n, num_indents, tab_width, tab_start, (unsigned int)line, (unsigned int)line_with_indents);
+                }
             }
 
             // Insert new lines
@@ -70,7 +91,7 @@ int main(int argc, char **argv) {
             new_lines = 0;
 
             // Write content
-            fprintf(ofp, "%s", line);
+            fprintf(ofp, "%s", line_with_indents);
 
             // remember type of line
             prev_line_is_list = is_list;
