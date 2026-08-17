@@ -1,0 +1,95 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+int main(int argc, char **argv) {    
+    if (argc < 2) {
+        printf("Usage: trim_md_list_spacing <FILE>\n");
+        return 1;
+    }
+
+    // file names
+    char *file_name = argv[1];
+    char tmp_file_name[256];
+    int n = snprintf(tmp_file_name, 256, "%s.tmp", argv[1]);
+    tmp_file_name[n] = '\0';
+
+    // file pointers
+    FILE *ifp = fopen(file_name, "r");
+    FILE *ofp = fopen(tmp_file_name, "w");
+
+    // buffer
+    int new_lines = 0;
+    bool prev_line_is_list = false;
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+
+    // read input
+    while ((read = getline(&line, &len, ifp)) != -1) {
+        //printf("Line has length %d %d\n", len, read);
+        if (read == 1) {
+            ++new_lines;
+            //printf("Blank line\n");
+        }
+        else {
+            // normalize line ending
+            if (read >= 2) {
+                if (line[read-2] == '\r') {
+                    line[read-2] = '\n';
+                    line[read-1] = '\0';
+                }
+            }
+            
+            // find first character
+            n = 0;
+            while (line[n] && line[n] <= ' ' && n < read) {
+                ++n;
+            }
+            if (n == read) {
+                new_lines++;
+                //printf("Blank line\n");
+                continue;
+            }
+            //printf("New line '%s' starts with '%c' (%d)\n", line, line[n], n);
+            
+            char c = line[n];
+            bool is_list = false;
+            if (c == '*' || c == '-') {
+                is_list = true;
+                line[n] = '-';
+            }
+
+            // Insert new lines
+            if ((!is_list || !prev_line_is_list) && new_lines > 0) {
+                while (new_lines--) {
+                    fprintf(ofp, "\n");
+                }
+            }
+            new_lines = 0;
+
+            // Write content
+            fprintf(ofp, "%s", line);
+
+            // remember type of line
+            prev_line_is_list = is_list;
+        }
+    }
+
+    fclose(ifp);
+    fclose(ofp);
+    if (line) {
+        free(line);
+    }
+
+    // move temporary file to original file
+    n = rename(tmp_file_name, file_name);
+    if (n) {
+        printf("Rename returned %d and could not overwrite the original file.\n", n);
+        printf("  Please execute the following command:\n\n");
+        printf("  mv %s %s\n", tmp_file_name, file_name);
+    }
+    return 0;
+
+}

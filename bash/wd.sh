@@ -11,8 +11,7 @@ wds_file=${WDS_FILE:="$3"}
 
 [ -z "$exe" ] && exe="echo"
 [ -z "$wds_file" ] && wds_file="${HOME}/bin/wds.txt"
-
-echo "exe is $exe dir is $dir wds_file is $wds_file"
+#echo "exe is $exe dir is $dir wds_file is $wds_file"
 
 COL_CYAN='\033[0;96m'
 COL_NORMAL='\033[0;39m'
